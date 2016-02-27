@@ -24,9 +24,8 @@ public class ImageAdapter extends BaseAdapter {
     private List<String> list;
     private LayoutInflater inflater;
     private DisplayImageOptions options;
-    private int imageSize;
 
-    public ImageAdapter(Context context, List<String> list, int imageSize) {
+    public ImageAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);

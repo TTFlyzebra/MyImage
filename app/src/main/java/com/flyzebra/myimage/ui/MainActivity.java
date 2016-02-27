@@ -1,18 +1,22 @@
 package com.flyzebra.myimage.ui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.flyzebra.myimage.R;
 import com.flyzebra.myimage.data.ImageListUtils;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private GridView ac_gv01;
     private ImageAdapter imageAdapter;
+    private ArrayList<String> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,18 +25,25 @@ public class MainActivity extends AppCompatActivity {
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int imageSize;
         if(dm.widthPixels<dm.heightPixels){
-            imageSize = dm.widthPixels / 3;
             ac_gv01.setNumColumns(3);
         }else{
-            imageSize = dm.heightPixels / 3;
             float colnum = (float)dm.widthPixels/(float)dm.heightPixels*3.0f;
             ac_gv01.setNumColumns((int) colnum);
         }
 
-        List<String> list = ImageListUtils.getImagesFromSDPath("DCIM");
-        imageAdapter = new ImageAdapter(this,list,imageSize);
+        list = ImageListUtils.getImagesFromSDPath("DCIM");
+        imageAdapter = new ImageAdapter(this,list);
         ac_gv01.setAdapter(imageAdapter);
+        ac_gv01.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, ImageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("ID", (int) id);
+                intent.putStringArrayListExtra("file_list", list);
+                startActivity(intent);
+            }
+        });
     }
 }

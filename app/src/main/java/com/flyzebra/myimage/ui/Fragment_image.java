@@ -1,29 +1,26 @@
 package com.flyzebra.myimage.ui;
 
 import com.flyzebra.myimage.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.drawable.AnimationDrawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 public class Fragment_image extends Fragment {
 	public String TAG = "com.flyzebra";
 	private static final String ARG_PATH = "filepath";
-	private static final int SCREEN_W = 11;
-	private static final int SCREEN_H = 12;	
 	private String filepath;
 	private ImageView fm_image_iv01;
 	private ImageView fm_image_iv02;
-
+	private DisplayImageOptions options;
 
 	public Fragment_image() {
 	}
@@ -43,8 +40,6 @@ public class Fragment_image extends Fragment {
 		Bundle args = getArguments();
 		filepath = args.getString(ARG_PATH);
 		getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-		DisplayMetrics dm = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);			
 	}
 
 	@Override
@@ -55,16 +50,25 @@ public class Fragment_image extends Fragment {
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		Log.i(TAG,"Fragment_image->onViewCreated");
 		fm_image_iv01 = (ImageView) view.findViewById(R.id.fm_image_iv01);
 		fm_image_iv02 = (ImageView) view.findViewById(R.id.fm_image_iv02);
 		fm_image_iv01.setSoundEffectsEnabled(false);
 		fm_image_iv02.setSoundEffectsEnabled(false);
+		options = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.drawable.ic_stub)
+				.showImageForEmptyUri(R.drawable.ic_empty)
+				.showImageOnFail(R.drawable.ic_error)
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+				.considerExifParams(true)
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 	}
-	
+
 	@Override
-	public void onResume() {
+	public void onStart() {
 		super.onStart();
+		ImageLoader.getInstance().displayImage(filepath, fm_image_iv01, options);
 	}
 
 	@Override

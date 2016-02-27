@@ -13,8 +13,8 @@ import java.util.Locale;
  * Created by Administrator on 2016/2/27.
  */
 public class ImageListUtils {
-    public static List<String> getImagesFromSDPath(String path){
-        List<String > list = new ArrayList<>();
+    public static ArrayList<String> getImagesFromSDPath(String path){
+        ArrayList<String > list = new ArrayList<>();
         //判断SDCARD是否存在
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             File file = Environment.getExternalStorageDirectory();
