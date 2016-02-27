@@ -3,6 +3,7 @@ package com.flyzebra.myimage.ui;
 import com.flyzebra.myimage.R;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -61,7 +62,7 @@ public class Fragment_image extends Fragment {
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
 				.considerExifParams(true)
-				.bitmapConfig(Bitmap.Config.RGB_565)
+				.bitmapConfig(Bitmap.Config.ARGB_8888)
 				.build();
 	}
 

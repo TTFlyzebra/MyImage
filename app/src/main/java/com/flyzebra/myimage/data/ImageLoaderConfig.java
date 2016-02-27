@@ -1,4 +1,4 @@
-package com.flyzebra.myimage.image;
+package com.flyzebra.myimage.data;
 
 import android.content.Context;
 
